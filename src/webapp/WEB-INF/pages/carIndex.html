@@ -6,10 +6,11 @@
     <title></title>
 </head>
 <body>
-<h1>MY FIRST PAGe</h1>
+<h1></h1>
 <div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
+    <h1>The car table:</h1>
+    <th:block th:each="tb : ${table}">
+        <h2 th:text="${tb}">The table will appear here!</h2>
     </th:block>
 </div>
 </body>
