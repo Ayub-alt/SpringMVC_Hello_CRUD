@@ -1,27 +1,30 @@
 package web.hiber.dao;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import web.hiber.model.Car;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
 public class CarDaoImpl implements CarDao {
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @Transactional
     @Override
     public void addCar(Car car) {
-
+        entityManager.persist(car);
     }
 
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
     @Override
     public List<Car> listCars() {
-        List<Car> cars = new ArrayList<>();
-        cars.add(new Car("Van", 2221, 2000));
-        cars.add(new Car("Track", 3241, 2006));
-        cars.add(new Car("PickUp", 8121, 2003));
-        cars.add(new Car("SuperCar", 6221, 2009));
-        cars.add(new Car("Lada", 4291, 2002));
-        return cars;
+        TypedQuery<Car> hql = entityManager.createQuery("select c from Car c", Car.class);
+        return hql.getResultList();
     }
 }

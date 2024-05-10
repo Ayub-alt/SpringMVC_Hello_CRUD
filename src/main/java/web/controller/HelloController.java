@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/")
 public class HelloController {
 
-    @GetMapping(value = "")
+    @GetMapping(value = "hello")
     public String printWelcome(ModelMap model) {
         List<String> messages = new ArrayList<>();
         messages.add("Hello!");
@@ -29,12 +29,11 @@ public class HelloController {
     @GetMapping("car")
     public String printCarTable(ModelMap model, @RequestParam(value = "count", required = false) String strCount) {
         List<Car> cars = new CarServiceImpl().listCars();
-        if(strCount == null){
+        if (strCount == null) {
             model.addAttribute("table", cars);
-        }
-        else {
+        } else {
             int count = Integer.parseInt(strCount);
-            if(count<5){
+            if (count < 5) {
                 model.addAttribute("table", cars.subList(0, count));
             } else {
                 model.addAttribute("table", cars);
